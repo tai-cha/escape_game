@@ -1,12 +1,12 @@
-class Item{
+class Item {
   int id;
-  float xpos,ypos;
+  float xpos, ypos;
   float scale;
   String name;
   PImage image;
   boolean found = false;
-  
-  Item(String name,String imgPath,float xpos, float ypos,float scale){
+
+  Item(String name, String imgPath, float xpos, float ypos, float scale) {
     this.name = name;
     image = loadImage(imgPath);
     this.xpos = xpos;
@@ -14,8 +14,7 @@ class Item{
     this.scale = scale;
   }
 
-  void show(){
-    image(image,xpos,ypos);
+  void show() {
+    image(image, xpos, ypos);
   }
-
 }
