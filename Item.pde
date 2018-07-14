@@ -5,6 +5,7 @@ class Item {
   String name;
   PImage image;
   boolean found = false;
+  boolean visible;
 
   Item(String name, String imgPath, float xpos, float ypos, float scale) {
     this.name = name;

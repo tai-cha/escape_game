@@ -17,7 +17,7 @@ class Inventory {
     stroke(255, 215, 0);
     strokeWeight(2);
     for (int i = 0; i < itemMax; i++) {
-      rect(i * 40 + 20, 40, 40, 40);
+      rect(i * 50 + 20, 20, 50, 50);
     }
   }
 
