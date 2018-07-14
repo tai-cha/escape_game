@@ -1,5 +1,6 @@
 import processing.sound.*;
 
+PFont hiraKaku;
 
 int itemMax = 10;
 Item[] items;
@@ -8,8 +9,9 @@ Inventory iv;
 color bgColor = color(0);
 boolean isStartScreen = true;
 
-
 void setup() {
+  hiraKaku = createFont("HiraKakuPro-W3",30,true);
+  textFont(hiraKaku);
   items = new Item[itemMax];
   sm = new SceneManager();
   iv = new Inventory();
@@ -18,6 +20,8 @@ void setup() {
   sm.setWallpaper("wallpaper01.jpg");
   sm.setFloor("floor01.jpg");
   sm.showRoom();
+  sm.setText("testです。これはテストです。");
+  
 }
 
 void draw() {
@@ -25,5 +29,5 @@ void draw() {
   sm.showRoom();
   sm.showTextWindow();
   iv.showBoxes();
-  
+  sm.showText();
 }
