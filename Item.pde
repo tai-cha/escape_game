@@ -18,4 +18,5 @@ class Item {
   void show() {
     image(image, xpos, ypos);
   }
+  
 }

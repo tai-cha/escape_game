@@ -10,7 +10,7 @@ color bgColor = color(0);
 boolean isStartScreen = true;
 
 void setup() {
-  hiraKaku = createFont("HiraKakuPro-W3",30,true);
+  hiraKaku = createFont("HiraKakuPro-W3", 30, true);
   textFont(hiraKaku);
   items = new Item[itemMax];
   sm = new SceneManager();
@@ -21,7 +21,6 @@ void setup() {
   sm.setFloor("floor01.jpg");
   sm.showRoom();
   sm.setText("testです。これはテストです。");
-  
 }
 
 void draw() {
@@ -30,4 +29,16 @@ void draw() {
   sm.showTextWindow();
   iv.showBoxes();
   sm.showText();
+}
+
+void mousePressed() {
+  if (sm.textWindowCheck(mouseX, mouseY)) {
+    if (sm.textDrawing) {
+      sm.letterShowGap = 2;
+      println("show gap changed");
+    } else {
+      sm.textVisible = false;
+      println("text is changed invisible");
+    }
+  }
 }

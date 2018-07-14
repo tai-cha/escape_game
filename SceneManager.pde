@@ -4,10 +4,13 @@ class SceneManager {
   PImage wallpaper, floor;
 
   int lettersShowed = 0;
-  boolean textShowed = false;
+  boolean textVisible = true;
 
   char[] letters;
   int counter = 0;
+
+  int letterShowGap =5;
+  boolean textDrawing =false;
 
   void setWallpaper(String imgPath) {
     wallpaper = loadImage(imgPath);
@@ -35,16 +38,36 @@ class SceneManager {
     for (int i=0; i<text.length(); i++) {
       letters[i] = text.charAt(i);
     }
+    counter = 0;
+  }
+
+  boolean textWindowCheck(float x, float y) {
+    if (20<x&&x<width-20&&height*14/17<y&&y<height-20) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   void showText() {
-    for (int i=0; i<lettersShowed; i++) {
-      text(letters[i], 30+i*30, height*14/17+30);
+    if (textVisible) {
+      if (lettersShowed == 0) {
+        textDrawing = true;
+//        println("textDrawing is turned on");
+      }
+      for (int i=0; i<lettersShowed; i++) {
+        text(letters[i], 30+i*30, height*14/17+30);
+      }
+      if (lettersShowed<letters.length) {
+        if (counter % letterShowGap == 0) {
+          lettersShowed++;
+        }
+      } else {
+        textDrawing = false;
+//        println("textDrawing is turned off");
+      }
+      counter++;
     }
-    if (lettersShowed<letters.length&& counter%5 == 0) {
-      lettersShowed++;
-    }
-    counter++;
   }
 
   void clearScreen() {
