@@ -1,21 +1,52 @@
 class Item {
-  int id;
-  float xpos, ypos;
-  float scale;
-  String name;
-  PImage image;
-  boolean found = false;
-  boolean visible;
+  private float xpos, ypos;
+  private float scale;
+  private String name;
+  private PImage image;
+  private boolean found = false;
+  private boolean visible = false;
 
   Item(String name, String imgPath, float xpos, float ypos, float scale) {
-    this.name = name;
     image = loadImage(imgPath);
+    this.name = name;
     this.xpos = xpos;
     this.ypos = ypos;
     this.scale = scale;
   }
+  
+  String getName() {
+    return name;
+  }
+  
+  void setFound(boolean found) {
+    this.found = found;
+  }
+  
+  boolean isFound() {
+    return found;
+  }
+  
+  void setVisible(boolean visible) {
+    this.visible = visible;
+  }
+  
+  boolean isVisible() {
+    return visible;
+  }
+  
+  void move(float dx,float dy) {
+    xpos += dx;
+    ypos += dy;
+  }
+  
+  void setPosition(float xpos,float ypos) {
+    this.xpos = xpos;
+    this.ypos = ypos;
+  }
 
   void show() {
-    image(image, xpos, ypos);
+    if (visible) {
+      image(image, xpos, ypos, image.width*scale, image.height*scale);
+    }
   }
 }

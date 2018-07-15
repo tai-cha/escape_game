@@ -1,19 +1,19 @@
 class SceneManager {
 
-  String text = "テキストがセットされていないよ";
-  PImage wallpaper, floor;
+  private Text text = new Text("このテキストが表示される場合はエラーです。\n作者にお知らせください。");
+  private PImage wallpaper, floor;
 
-  int lettersShowed = 0;
-  boolean textVisible = true;
+  private int lettersShowed = 0;
 
-  char[] letters;
-  int counter = 0;
+  private char[] letters;
+  private int counter = 0;
 
-  int letterShowGap =5;
-  boolean textDrawing =false;
-  int textRow = 0;
+  private final int DEFAULT_LETTER_SHOW_GAP = 5;
+  private int letterShowGap = DEFAULT_LETTER_SHOW_GAP;
+  private boolean textDrawing =false;
+  static final int LETTERS_PER_ROW = 22;
 
-  int cursol = 0;
+  private int cursol = 0;
 
   void setWallpaper(String imgPath) {
     wallpaper = loadImage(imgPath);
@@ -30,16 +30,23 @@ class SceneManager {
   void startScreen() {
   }
 
+  void updateText(String str) {
+    getText().setStr(str);
+    getText().setVisible(true);
+    setTextArray();
+  }
+
   void showTextWindow() {
     stroke(#2361FA);
     fill(#2361FA, 30);
     rect(20, height*14/17, width - 40, height*3/17-20, 8);
   }
 
-  void setText(String text) {
-    letters = new char[text.length()];
-    for (int i=0; i<text.length(); i++) {
-      letters[i] = text.charAt(i);
+  void setTextArray() {
+    letterShowGap = DEFAULT_LETTER_SHOW_GAP;
+    letters = new char[text.getStr().length()];
+    for (int i=0; i<text.getStr().length(); i++) {
+      letters[i] = text.getStr().charAt(i);
     }
     counter = 0;
   }
@@ -52,22 +59,30 @@ class SceneManager {
     }
   }
 
+  Text getText() {
+    return text;
+  }
+
+  void setLetterShowGap(int letterShowGap) {
+    this.letterShowGap = letterShowGap;
+  }
+
+  boolean isTextDrawing() {
+    return textDrawing;
+  }
+
   void showText() {
-    if (textVisible) {
+    if (text.isVisible()) {
       cursol = 0;
       if (lettersShowed == 0) {
         textDrawing = true;
-        println("textDrawing is turned on");
+        //        println("textDrawing is turned on");
       }
-      /*      if (letters[lettersShowed] == '\n'){
-       textRow++;
-       println("row is"+str(textRow));
-       } */
       for (int i=0; i<lettersShowed; i++) {
         if (letters[i] == '\n') {
-          cursol += (22 - cursol % 22);
+          cursol += (22 - cursol % LETTERS_PER_ROW);
         } else {
-          text(letters[i], (cursol % 22 + 1) * 30, height * 14 / 17 + (cursol / 22 + 1) * 30);
+          text(letters[i], (cursol % LETTERS_PER_ROW + 1) * 30, height * 14 / 17 + (cursol / LETTERS_PER_ROW + 1) * 30);
           cursol++;
         }
       }
@@ -80,6 +95,9 @@ class SceneManager {
         //        println("textDrawing is turned off");
       }
       counter++;
+    }
+    if (counter >= 2100000000) {
+      counter = 0;
     }
   }
 
