@@ -11,6 +11,9 @@ class SceneManager {
 
   int letterShowGap =5;
   boolean textDrawing =false;
+  int textRow = 0;
+
+  int cursol = 0;
 
   void setWallpaper(String imgPath) {
     wallpaper = loadImage(imgPath);
@@ -42,7 +45,7 @@ class SceneManager {
   }
 
   boolean textWindowCheck(float x, float y) {
-    if (20<x&&x<width-20&&height*14/17<y&&y<height-20) {
+    if (20 < x && x < width-20 && height * 14 / 17 < y && y < height - 20) {
       return true;
     } else {
       return false;
@@ -51,12 +54,22 @@ class SceneManager {
 
   void showText() {
     if (textVisible) {
+      cursol = 0;
       if (lettersShowed == 0) {
         textDrawing = true;
-//        println("textDrawing is turned on");
+        println("textDrawing is turned on");
       }
+      /*      if (letters[lettersShowed] == '\n'){
+       textRow++;
+       println("row is"+str(textRow));
+       } */
       for (int i=0; i<lettersShowed; i++) {
-        text(letters[i], 30+i*30, height*14/17+30);
+        if (letters[i] == '\n') {
+          cursol += (22 - cursol % 22);
+        } else {
+          text(letters[i], (cursol % 22 + 1) * 30, height * 14 / 17 + (cursol / 22 + 1) * 30);
+          cursol++;
+        }
       }
       if (lettersShowed<letters.length) {
         if (counter % letterShowGap == 0) {
@@ -64,7 +77,7 @@ class SceneManager {
         }
       } else {
         textDrawing = false;
-//        println("textDrawing is turned off");
+        //        println("textDrawing is turned off");
       }
       counter++;
     }

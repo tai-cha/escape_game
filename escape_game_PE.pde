@@ -20,7 +20,7 @@ void setup() {
   sm.setWallpaper("wallpaper01.jpg");
   sm.setFloor("floor01.jpg");
   sm.showRoom();
-  sm.setText("testです。これはテストです。");
+  sm.setText("テストです。これはテストです。てすてすてすてすてすてすてす");
 }
 
 void draw() {
@@ -34,7 +34,7 @@ void draw() {
 void mousePressed() {
   if (sm.textWindowCheck(mouseX, mouseY)) {
     if (sm.textDrawing) {
-      sm.letterShowGap = 2;
+      sm.letterShowGap = 1;
       println("show gap changed");
     } else {
       sm.textVisible = false;
