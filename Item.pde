@@ -34,6 +34,14 @@ class Item {
     return visible;
   }
   
+  boolean isIn (){
+    if(xpos <= mouseX && mouseX <= xpos + image.width*scale && ypos <= mouseY && mouseY <= ypos + image.height*scale) {
+      return true;
+    }else{ 
+      return false;
+    }
+  }
+  
   void move(float dx,float dy) {
     xpos += dx;
     ypos += dy;
