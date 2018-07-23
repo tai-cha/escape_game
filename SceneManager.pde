@@ -15,6 +15,11 @@ class SceneManager {
 
   private int cursol = 0;
 
+  SceneManager() {
+    setWallpaper("wallpaper01.jpg");
+    setFloor("floor01.jpg");
+  }
+
   void setWallpaper(String imgPath) {
     wallpaper = loadImage(imgPath);
   }
@@ -28,6 +33,11 @@ class SceneManager {
   }
 
   void startScreen() {
+    textFont(title);
+    fill(#84B45B,99);
+    rect(0,0,width,height);
+    fill(0);
+    text("フリ素部屋からの脱出",10,240);
   }
 
   void updateText(String str) {
@@ -72,6 +82,7 @@ class SceneManager {
   }
 
   void showText() {
+    textFont(mplus);
     if (text.isVisible()) {
       cursol = 0;
       if (lettersShowed == 0) {
