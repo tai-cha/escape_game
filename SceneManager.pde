@@ -34,15 +34,16 @@ class SceneManager {
 
   void startScreen() {
     textFont(title);
-    fill(#84B45B,99);
-    rect(0,0,width,height);
+    fill(#84B45B, 99);
+    rect(0, 0, width, height);
     fill(0);
-    text("フリ素部屋からの脱出",10,240);
+    text("フリ素部屋からの脱出", 10, 240);
+    textFont(mplus);
+    text("クリックでスタート", 240, 400);
   }
 
   void updateText(String str) {
     getText().setStr(str);
-    getText().setVisible(true);
     setTextArray();
   }
 
