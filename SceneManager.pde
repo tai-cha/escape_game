@@ -86,6 +86,7 @@ class SceneManager {
   }
 
   void showText() {
+    fill(0);
     textFont(mplus);
     if (text.isVisible()) {
       cursol = 0;
@@ -155,6 +156,9 @@ class SceneManager {
     text("ゲームクリアーーーーー！！！！！", 10, 240);
     textFont(mplus);
     text("おめでとう！！！！！！！", 240, 400);
+    showTextWindow();
+    
+    showText();
   }
   
   

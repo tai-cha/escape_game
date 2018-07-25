@@ -154,6 +154,9 @@ void mousePressed() {
     itemsClicked();
   } else {
     //クリア画面のとき
+    if (sm.textWindowCheck(mouseX, mouseY)) {
+      sm.textClicked();
+    }
   }
 }
 
@@ -186,6 +189,8 @@ void itemsClicked() {
         if (canEscape) {
           items.get("door").setImage("door_opened_1.png");
           clearScreen = true;
+          sm.updateText(texts[9].getStr());
+          sm.getText().setVisible(true);
         } else {
           sm.updateText(texts[1].getStr());
           sm.getText().setVisible(true);
