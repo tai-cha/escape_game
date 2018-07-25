@@ -12,6 +12,7 @@ Inventory iv;
 color bgColor = color(0);
 boolean startScreen = true;
 boolean clearScreen = false;
+boolean canEscape = false;
 
 void setup() {
   mplus = createFont("mplus-1m-light", 30, true);
@@ -30,7 +31,7 @@ void setup() {
   sm.getText().setVisible(false);
   items = new HashMap<String, Item>();
   if (!items.containsKey("key")) {
-    items.put("key", new Item("カギ", "key.jpg", 200, 200, 0.2));
+    items.put("key", new Item("カギ", "key.png", 200, 200, 0.2, true));
   } else {
     println("カギがすでに登録されてるよ？コード見直そうか？？");
   }
@@ -39,8 +40,15 @@ void setup() {
   } else {
     println("ドアがすでに登録されてるよ？コード見直そうか？？");
   }
+  if (!items.containsKey("sofa")) {
+    items.put("sofa", new Item("ソファー", "sofa.png", 40, 370, 1.0));
+  } else {
+    println("ソファーがすでに登録されてるよ？コード見直そうか？？");
+  }
+
   items.get("key").setVisible(true);
   items.get("door").setVisible(true);
+  items.get("sofa").setVisible(true);
 
   sm.updateText(texts[textNum].getStr());
   sm.getText().visible = true;
@@ -61,6 +69,7 @@ void draw() {
 void gameScreen() {
   sm.showTextWindow();
   iv.showBoxes();
+  iv.showItems();
   sm.showText();
   itemDraw();
 }
@@ -94,7 +103,28 @@ void textClicked () {
 }
 
 void itemsClicked() {
-  if (items.get("key").isIn()) {
-    items.get("key").setVisible(false);
+  /*  if (items.get("key").isIn()) {
+   items.get("key").setVisible(false);
+   } */
+  for (Item item : items.values()) {
+    if (item.isGettable() && !item.isFound()) {
+      if (item.isIn()) {
+        item.setFound(true);
+        iv.put(item);
+        if (item == items.get("key")) {
+          canEscape = true;
+        }
+        item.setVisible(false);
+      }
+    }
+    if (!item.isGettable()) {
+      if (item.isIn()) {
+        if (item == items.get("door")) {
+          if (canEscape) {
+            clearScreen = true;
+          }
+        }
+      }
+    }
   }
 }

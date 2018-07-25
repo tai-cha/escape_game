@@ -22,7 +22,6 @@ class Inventory {
   }
 
   void showItems() {
-
     for (int i = 0; i < itemMax; i++) {
       if (items[i] != null) {
         image(items[i].image, i * 40 + 30, 40, 28, 28);

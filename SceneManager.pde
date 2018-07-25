@@ -33,6 +33,7 @@ class SceneManager {
   }
 
   void startScreen() {
+    itemDraw();
     textFont(title);
     fill(#84B45B, 99);
     rect(0, 0, width, height);
@@ -114,5 +115,13 @@ class SceneManager {
   }
 
   void clearScreen() {
+    itemDraw();
+    textFont(title);
+    fill(#84B45B, 99);
+    rect(0, 0, width, height);
+    fill(0);
+    text("ゲームクリアーーーーー！！！！！", 10, 240);
+    textFont(mplus);
+    text("おめでとう！！！！！！！", 240, 400);
   }
 }

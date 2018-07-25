@@ -5,6 +5,7 @@ class Item {
   private PImage image;
   private boolean found = false;
   private boolean visible = false;
+  private boolean gettable;
 
   Item(String name, String imgPath, float xpos, float ypos, float scale) {
     image = loadImage(imgPath);
@@ -12,6 +13,16 @@ class Item {
     this.xpos = xpos;
     this.ypos = ypos;
     this.scale = scale;
+    this.gettable = false;
+  }
+  
+    Item(String name, String imgPath, float xpos, float ypos, float scale,boolean gettable) {
+    image = loadImage(imgPath);
+    this.name = name;
+    this.xpos = xpos;
+    this.ypos = ypos;
+    this.scale = scale;
+    this.gettable = gettable;
   }
   
   String getName() {
@@ -33,6 +44,17 @@ class Item {
   boolean isVisible() {
     return visible;
   }
+  
+  	public boolean isGettable()
+	{
+		return gettable;
+	}
+
+	public void setGettable(boolean gettable)
+	{
+		this.gettable = gettable;
+	}
+
   
   boolean isIn (){
     if(xpos <= mouseX && mouseX <= xpos + image.width*scale && ypos <= mouseY && mouseY <= ypos + image.height*scale) {
