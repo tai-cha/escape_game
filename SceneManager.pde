@@ -115,6 +115,36 @@ class SceneManager {
     }
   }
 
+  void textClicked () {
+    if (sm.isTextDrawing()) {
+      sm.setLetterShowGap(1);
+      println("show gap changed");
+    } else {
+      sm.getText().setVisible(false);
+      println("text is changed invisible");
+    }
+  }
+  
+  void drawDirectionChangeButton() {
+    fill(#54B1ED,90);
+    ellipse(40,height/2,50,50);
+    ellipse(width-40,height/2,50,50);
+    fill(0);
+    noStroke();
+    triangle(25,height/2,50,height/2-15,50,height/2+15);
+    triangle(width-25,height/2,width-50,height/2-15,width-50,height/2+15);    
+}
+
+  int dirButtonClickChecker() {
+    if(dist(40,height/2,mouseX,mouseY) <= 25){
+      return LEFT;
+    }
+    if(dist(width-40,height/2,mouseX,mouseY) <= 25){
+      return RIGHT;
+    }
+    return 0;
+  }
+
   void clearScreen() {
     itemDraw();
     textFont(title);
