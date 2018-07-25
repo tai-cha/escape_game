@@ -14,6 +14,7 @@ class SceneManager {
   static final int LETTERS_PER_ROW = 22;
 
   private int cursol = 0;
+  private int plantMoveTimes = 0;
 
   SceneManager() {
     setWallpaper("wallpaper01.jpg");
@@ -155,4 +156,16 @@ class SceneManager {
     textFont(mplus);
     text("おめでとう！！！！！！！", 240, 400);
   }
+  
+  
+void movePlant() {
+  if(plantMoveTimes <60){
+    items.get("plant").move(-2,0);
+    plantMoveTimes++;
+  }else{
+    plantMoving = false;
+    plantMoved = true;
+  }
+}
+  
 }
