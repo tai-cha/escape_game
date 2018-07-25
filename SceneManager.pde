@@ -44,7 +44,8 @@ class SceneManager {
   }
 
   void updateText(String str) {
-    getText().setStr(str);
+    text = new Text(str);
+    lettersShowed = 0;
     setTextArray();
   }
 
@@ -57,7 +58,7 @@ class SceneManager {
   void setTextArray() {
     letterShowGap = DEFAULT_LETTER_SHOW_GAP;
     letters = new char[text.getStr().length()];
-    for (int i=0; i<text.getStr().length(); i++) {
+    for (int i=0; i<letters.length; i++) {
       letters[i] = text.getStr().charAt(i);
     }
     counter = 0;

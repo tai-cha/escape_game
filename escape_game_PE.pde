@@ -98,7 +98,6 @@ void textClicked () {
   } else {
     sm.getText().setVisible(false);
     println("text is changed invisible");
-    sm.updateText(texts[textNum].getStr());
   }
 }
 
@@ -111,10 +110,12 @@ void itemsClicked() {
       if (item.isIn()) {
         item.setFound(true);
         iv.put(item);
+        sm.updateText(item.getName()+"を手に入れた！");
         if (item == items.get("key")) {
           canEscape = true;
         }
         item.setVisible(false);
+        sm.getText().setVisible(true);
       }
     }
     if (!item.isGettable()) {
@@ -122,6 +123,9 @@ void itemsClicked() {
         if (item == items.get("door")) {
           if (canEscape) {
             clearScreen = true;
+          } else {
+            sm.updateText(texts[1].getStr());
+            sm.getText().setVisible(true);
           }
         }
       }
