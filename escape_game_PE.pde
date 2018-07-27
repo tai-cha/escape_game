@@ -69,9 +69,24 @@ void setup() {
     println("植木鉢がすでに登録されてるよ？コード見直そうか？？");
   }
   if (!items.containsKey("hummer")) {
-    items.put("hummer", new Item("ハンマー", "hummer.png", 150, 480, 0.3, true, 4));
+    items.put("hummer", new Item("ハンマー", "hummer.png", 450, 480, 0.3, true, 3));
   } else {
     println("ハンマーがすでに登録されてるよ？コード見直そうか？？");
+  }
+  if (!items.containsKey("passport")) {
+    items.put("passport", new Item("パスポート", "passport.png", 100, 300, 0.02, true, 4));
+  } else {
+    println("パスポートがすでに登録されてるよ？コード見直そうか？？");
+  }
+  if (!items.containsKey("shelf")) {
+    items.put("shelf", new Item("棚", "shelf.png", 80, 250, 0.25, 4));
+  } else {
+    println("棚がすでに登録されてるよ？コード見直そうか？？");
+  }
+    if (!items.containsKey("phone")) {
+    items.put("phone", new Item("スマホ", "phone.png", 300, 520, 0.015,true, 2));
+  } else {
+    println("スマホがすでに登録されてるよ？コード見直そうか？？");
   }
 
   items.get("key").setVisible(true);
@@ -82,8 +97,9 @@ void setup() {
   items.get("TV").setVisible(true);
   items.get("fridge").setVisible(true);  
   items.get("hummer").setVisible(true);
-
-
+  items.get("shelf").setVisible(true);
+  items.get("passport").setVisible(true);
+  items.get("phone").setVisible(true);
 
   sm.updateText(texts[textNum].getStr());
   sm.getText().visible = true;
@@ -91,10 +107,11 @@ void setup() {
 
 void draw() {
   background(bgColor);
-  sm.showRoom();
   if (startScreen) {
+    sm.showRoom();
     sm.startScreen();
   } else if (!clearScreen) {
+    sm.showRoom();
     gameScreen();
   } else {
     sm.clearScreen();

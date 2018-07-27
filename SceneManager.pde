@@ -148,16 +148,15 @@ class SceneManager {
   }
 
   void clearScreen() {
-    itemDraw();
+    //itemDraw();
     textFont(title);
-    fill(#84B45B, 99);
+    fill(#9FD3EA, 99);
     rect(0, 0, width, height);
     fill(0);
-    text("ゲームクリアーーーーー！！！！！", 10, 240);
+    text("ゲームクリアーー！！", 13, 240);
     textFont(mplus);
-    text("おめでとう！！！！！！！", 240, 400);
+    text("End0", 320, 400);
     showTextWindow();
-    
     showText();
   }
   
