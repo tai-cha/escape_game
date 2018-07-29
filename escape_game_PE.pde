@@ -3,8 +3,8 @@ import java.util.Map;
 
 PFont mplus;
 PFont title;
+PFont restart;
 Text[] texts;
-int textNum = 0;
 int itemMax = 4;
 HashMap<String, Item> items;
 SceneManager sm;
@@ -12,14 +12,24 @@ Inventory iv;
 color bgColor = color(0);
 boolean startScreen = true;
 boolean clearScreen = false;
-boolean canEscape = false;
 int currentDirection = 1; //1.North 2.East 3.South 4.West
 boolean plantMoving = false;
 boolean plantMoved = false;
+boolean cleared = false;
+int clearCounter = 0;
 
 void setup() {
+  startScreen = true;
+  clearScreen = false;
+  currentDirection = 1;
+  plantMoving = false;
+  plantMoved = false;
+  cleared = false;
+  clearCounter = 0;
+  
   mplus = createFont("mplus-1m-light", 30, true);
   title = createFont("mplus-1m-light", 70, true);
+  restart = createFont("mplus-1m-light", 40, true);
   textFont(mplus);
   JSONArray JSONtexts = loadJSONArray("texts.json");
   texts = new Text[JSONtexts.getStringArray().length];
@@ -83,8 +93,8 @@ void setup() {
   } else {
     println("棚がすでに登録されてるよ？コード見直そうか？？");
   }
-    if (!items.containsKey("phone")) {
-    items.put("phone", new Item("スマホ", "phone.png", 300, 520, 0.015,true, 2));
+  if (!items.containsKey("phone")) {
+    items.put("phone", new Item("スマホ", "phone.png", 300, 520, 0.015, true, 2));
   } else {
     println("スマホがすでに登録されてるよ？コード見直そうか？？");
   }
@@ -101,7 +111,7 @@ void setup() {
   items.get("passport").setVisible(true);
   items.get("phone").setVisible(true);
 
-  sm.updateText(texts[textNum].getStr());
+  sm.updateText(texts[0].getStr());
   sm.getText().visible = true;
 }
 
@@ -127,6 +137,16 @@ void gameScreen() {
   itemDraw();
   if (plantMoving) {
     sm.movePlant();
+  }
+  if (cleared) {
+    if (clearCounter >=100) {
+      sm.getText().setVisible(true);
+      clearScreen = true;
+    }else{
+      fill(0,70);
+      rect(0,0,width,height);
+      clearCounter++;
+    }
   }
 }
 
@@ -174,27 +194,24 @@ void mousePressed() {
     if (sm.textWindowCheck(mouseX, mouseY)) {
       sm.textClicked();
     }
+    if (sm.isRestartClicked()) {
+      sm.restartClicked();
+    }
   }
 }
+
 
 void itemsClicked() {
 
   for (Item item : items.values()) {
-    if (item.isGettable() && !item.isFound() && currentDirection == item.direction && item != items.get("key")) {
+    if (item.isGettable() && !item.isFound() && currentDirection == item.direction) {
       if (item.isIn()) {
+        if(item == items.get("key") && !plantMoved){
+          break;
+        }
         item.setFound(true);
         iv.put(item);
         sm.updateText(item.getName()+"を手に入れた！");
-        item.setVisible(false);
-        sm.getText().setVisible(true);
-      }
-    }
-    if (item.isGettable() && !item.isFound() && currentDirection == item.direction && item == items.get("key")) {
-      if (item.isIn() && plantMoved) {
-        item.setFound(true);
-        iv.put(item);
-        sm.updateText(item.getName()+"を手に入れた！");
-        canEscape = true;
         item.setVisible(false);
         sm.getText().setVisible(true);
       }
@@ -203,11 +220,23 @@ void itemsClicked() {
     if (!item.isGettable() && item.isIn() && currentDirection == item.direction) {
 
       if (item == items.get("door")) {
-        if (canEscape) {
+        if (items.get("key").isFound()) {
           items.get("door").setImage("door_opened_1.png");
-          clearScreen = true;
-          sm.updateText(texts[9].getStr());
-          sm.getText().setVisible(true);
+          
+          if (!items.get("phone").isFound()) {
+            sm.setEndMsg("End 3");
+            sm.updateText(texts[12].getStr());
+          } else if (!items.get("passport").isFound()) {
+            sm.setEndMsg("End 2");
+            sm.updateText(texts[11].getStr());
+          } else if (!items.get("hummer").isFound()) {
+            sm.setEndMsg("End 1");
+            sm.updateText(texts[10].getStr());
+          } else {
+            sm.setEndMsg("End 0 (True End)");
+            sm.updateText(texts[9].getStr());
+          }
+          cleared = true;
         } else {
           sm.updateText(texts[1].getStr());
           sm.getText().setVisible(true);

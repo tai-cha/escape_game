@@ -16,6 +16,9 @@ class SceneManager {
   private int cursol = 0;
   private int plantMoveTimes = 0;
 
+  private String endMsg = "end";
+  private int clearCount = 0;
+
   SceneManager() {
     setWallpaper("wallpaper01.jpg");
     setFloor("floor01.jpg");
@@ -49,6 +52,7 @@ class SceneManager {
     lettersShowed = 0;
     setTextArray();
   }
+  
 
   void showTextWindow() {
     stroke(#2361FA);
@@ -126,25 +130,48 @@ class SceneManager {
       println("text is changed invisible");
     }
   }
-  
+
   void drawDirectionChangeButton() {
-    fill(#54B1ED,90);
-    ellipse(40,height/2,50,50);
-    ellipse(width-40,height/2,50,50);
+    fill(#54B1ED, 90);
+    ellipse(40, height/2, 50, 50);
+    ellipse(width-40, height/2, 50, 50);
     fill(0);
     noStroke();
-    triangle(25,height/2,50,height/2-15,50,height/2+15);
-    triangle(width-25,height/2,width-50,height/2-15,width-50,height/2+15);    
-}
+    triangle(25, height/2, 50, height/2-15, 50, height/2+15);
+    triangle(width-25, height/2, width-50, height/2-15, width-50, height/2+15);
+  }
 
   int dirButtonClickChecker() {
-    if(dist(40,height/2,mouseX,mouseY) <= 25){
+    if (dist(40, height/2, mouseX, mouseY) <= 25) {
       return LEFT;
     }
-    if(dist(width-40,height/2,mouseX,mouseY) <= 25){
+    if (dist(width-40, height/2, mouseX, mouseY) <= 25) {
       return RIGHT;
     }
     return 0;
+  }
+  
+  String getEndMsg() {
+    return endMsg;
+  }
+  
+  void setEndMsg(String msg) {
+    endMsg = msg;
+  }
+  
+  boolean isRestartClicked(){
+    if(mouseX >= 170 && mouseX <= 570 && mouseY >= 400 && mouseY <= 500){
+    return true;
+    }else{
+      return false;
+    }
+  }
+  
+  void restartClicked(){
+    noLoop();
+    delay(1);
+    setup();
+    loop();
   }
 
   void clearScreen() {
@@ -155,20 +182,25 @@ class SceneManager {
     fill(0);
     text("ゲームクリアーー！！", 13, 240);
     textFont(mplus);
-    text("End0", 320, 400);
+    text(endMsg, 320, 400);
     showTextWindow();
     showText();
+    stroke(#FC2929);
+    fill(0);
+    rect(170,450,400,100);
+    textFont(restart);
+    fill(255);
+    text("もう一度プレイする",185,515);
   }
-  
-  
-void movePlant() {
-  if(plantMoveTimes <60){
-    items.get("plant").move(-2,0);
-    plantMoveTimes++;
-  }else{
-    plantMoving = false;
-    plantMoved = true;
+
+
+  void movePlant() {
+    if (plantMoveTimes <60) {
+      items.get("plant").move(-2, 0);
+      plantMoveTimes++;
+    } else {
+      plantMoving = false;
+      plantMoved = true;
+    }
   }
-}
-  
 }
